@@ -8,9 +8,19 @@ Self-Driving Car Engineer Nanodegree Program
 MPC can be summarized as follows from [Robus Model Predictive Control Design](https://www.intechopen.com/books/model-predictive-control/robust-model-predictive-control-design).
 * Predict the future behavior of the process state/output over the finite time horizon.
 * Compute the future input signals on line at each step by minimizing a cost function under inequality constrains on the manipulated (control) and / or controlled variables.
-* Apply on the controlled plant only the first of vecotr control variable and repeat the previous step with new measured input/state/output variables.
+* Apply on the vehicle only the first of vector control variable and repeat the previous step with new measured input/state/output variables.
 
-**State**: state
+MPC uses the measurable **state** of the vehicle, **actuators** that change the state of the vehicle and set of **equations** that are used to compute the new state from previous state values.
+
+**State**: To keep track of the state of the vehicle, following parameters are used
+* x, y - position of the car in map coordinates which need to be converted to vehicle coordinate system.
+* ψ - orientation of the car
+* v - velocity of the car
+* cte - cross track error or distance of vehicle from trajectory
+* epsi - difference of vehicle orientation and trajectory orientation
+
+The simulator provides x, y, ψ and v for the car.
+
 **Actuators**:  Actuators 
 **Update equations**:
 
