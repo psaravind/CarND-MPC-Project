@@ -5,7 +5,7 @@ Self-Driving Car Engineer Nanodegree Program
 ## Implementation
 
 ### The Model
-Student describes their model in detail. 
+Kinematics is the geometry of pure motion - motion considered abstractly, without reference to force or mass. Thus, Kinematic models are simplifications of dynamic models ignoring tire forces, logitudinal and lateral forces, intertia, gravity, air resistance, mass and geometry of the vehicle. In order to describe and measure the Kinematics of motion we need certain parameters to keep track of the motion.  At a simple level, to define the Kinematics of a vehicle motion, we need State, Actuators and Update equations.
 
 **State**: state
 **Actuators**:  Actuators 
