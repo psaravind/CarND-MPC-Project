@@ -5,7 +5,10 @@ Self-Driving Car Engineer Nanodegree Program
 ## Implementation
 
 ### The Model
-Kinematics is the geometry of pure motion - motion considered abstractly, without reference to force or mass. Thus, Kinematic models are simplifications of dynamic models ignoring tire forces, logitudinal and lateral forces, intertia, gravity, air resistance, mass and geometry of the vehicle. In order to describe and measure the Kinematics of motion we need certain parameters to keep track of the motion.  At a simple level, to define the Kinematics of a vehicle motion, we need State, Actuators and Update equations.
+MPC can be summarized as follows from [https://www.intechopen.com/books/model-predictive-control/robust-model-predictive-control-design](Robus Model Predictive Control Design).
+* Predict the future behavior of the process state/output over the finite time horizon.
+* Compute the future input signals on line at each step by minimizing a cost function under inequality constrains on the manipulated (control) and / or controlled variables.
+* Apply on the controlled plant only the first of vecotr control variable and repeat the previous step with new measured input/state/output variables.
 
 **State**: state
 **Actuators**:  Actuators 
