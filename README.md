@@ -7,9 +7,9 @@ Self-Driving Car Engineer Nanodegree Program
 ### The Model
 Student describes their model in detail. 
 
-*State*: state
-*Actuators*:  Actuators 
-*update equations*:
+**State**: state
+**Actuators**:  Actuators 
+**Update equations**:
 
 ### Timestep Length and Elapsed Duration (N & dt)
 Student discusses the reasoning behind the chosen N (timestep length) and dt (elapsed duration between timesteps) values. Additionally the student details the previous values tried.
