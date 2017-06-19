@@ -36,7 +36,8 @@ Timestep N is the number of timesteps in the horizon, as it increases, the model
 dt is how much time elapses between acutations, for low values of dt the cars was oscillating a lot in the middle of the road, this is due to frequent responses from the actuator and the vehicle responding constantly.  For large value of dt, the car had jerky motion on the track, making sharp turns at the track edges, this resulted in car leaving the track few times.
 
 ### Polynomial Fitting and MPC Preprocessing
-A polynomial is fitted to waypoints.  If the student preprocesses waypoints, the vehicle state, and/or actuators prior to the MPC procedure it is described.
+
+x and y coordinates sent by the simulator is in map coordinates, these were converted to car cordinates and a 3rd degree polinomial was fit to calculate CTE.
 
 ### Model Predictive Control with Latency
 Latency defines the delay in propagating commands through the system to the car controls, since the simulator has been setup with a latency of 100ms, the model is implemented with 100ms latency as well.  Removing this latecy, the model was able to achieve a maximum speed of 100mph, with the latecy the maximum speed had to be reduced to 60mph for smooth steering and throttle.
