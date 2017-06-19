@@ -29,7 +29,11 @@ The simulator provides x, y, ψ and v for the car.
 dt is the change is time and Lf measures the distance between the front of the vehicle and its center of gravity.
 
 ### Timestep Length and Elapsed Duration (N & dt)
-Student discusses the reasoning behind the chosen N (timestep length) and dt (elapsed duration between timesteps) values. Additionally the student details the previous values tried.
+Timestep length(N) and Frequency(dt) are key parameters that needed to be tuned for the MPC model.
+
+Timestep N is the number of timesteps in the horizon, as it increases, the model predicts futher ahead.  Also as N increase the prediction becomes more inaccurate and takes more time to solve the equation in real time. Timestep values of 10 to 20 was experimented and value of 12 was selected.
+
+dt is how much time elapses between acutations, for low values of dt the cars was oscillating a lot in the middle of the road, this is due to frequent responses from the actuator and the vehicle responding constantly.  For large value of dt, the car had jerky motion on the track, making sharp turns at the track edges, this resulted in car leaving the track few times.
 
 ### Polynomial Fitting and MPC Preprocessing
 A polynomial is fitted to waypoints.  If the student preprocesses waypoints, the vehicle state, and/or actuators prior to the MPC procedure it is described.
