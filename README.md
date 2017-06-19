@@ -35,7 +35,7 @@ Student discusses the reasoning behind the chosen N (timestep length) and dt (el
 A polynomial is fitted to waypoints.  If the student preprocesses waypoints, the vehicle state, and/or actuators prior to the MPC procedure it is described.
 
 ### Model Predictive Control with Latency
-The student implements Model Predictive Control that handles a 100 millisecond latency. Student provides details on how they deal with latency.
+Latency defines the delay in propagating commands through the system to the car controls, since the simulator has been setup with a latency of 100ms, the model is implemented with 100ms latency as well.  Removing this latecy, the model was able to achieve a maximum speed of 100mph, with the latecy the maximum speed had to be reduced to 60mph for smooth steering and throttle.
 
 ## Dependencies
 
