@@ -28,6 +28,41 @@ The simulator provides x, y, ψ and v for the car.
 * ψ = ψ + v/Lf * δ * dt
 dt is the change is time and Lf measures the distance between the front of the vehicle and its center of gravity.
 
+**Cost function**: MPC.cpp(line 55:71) is the key cost function in solving MPC equation.  The equation requires lot of tuning, but follows the parameters shown in  [Self-Driving Car Project Q&A MPC Controller video](https://youtu.be/bOQuhpz3YfU?list=PLAwxTw4SYaPnfR7TzRZN-uxlxGbqxhtm2) and the solution to the class quiz.
+
+The cost function includes several coefficients that have a lot of power on how much attention we want the cost function to pay to certain attributes.  We have high values for reference state to cross track error(cte) and vehicle orientation error(epsi), this forces the cost function to be very low.  More attention is given to cte and epsi, so that the car is following the track and orientation than going fast, this results in the car not going off the road and not getting misalligned. These parameters in the cost functions smooth out the driving in the simulator. Code calculates the deviation from reference cte = 0, reference epsi = 0 and reference velocity = 60, this calculation is done for N timesteps into the future.
+
+		for (int t = 0; t < N; t++) {
+			fg[0] += 2000 * CppAD::pow(vars[cte_start + t], 2);
+			fg[0] += 2000 * CppAD::pow(vars[epsi_start + t], 2);
+			fg[0] += CppAD::pow(vars[v_start + t] - ref_v, 2);
+		}
+
+Minimize the use of actuators in the cost function.
+		for (int t = 0; t < N - 1; t++) {
+			fg[0] += 5 * CppAD::pow(vars[delta_start + t], 2);
+			fg[0] += 5 * CppAD::pow(vars[a_start + t], 2);
+		}
+
+Minimize the value gap between sequential actuations so that car is not jerky and not compromise the car.
+		for (int t = 0; t < N - 2; t++) {
+			fg[0] += 200 * CppAD::pow(vars[delta_start + t + 1] - vars[delta_start + t], 2);
+			fg[0] += 10 * CppAD::pow(vars[a_start + t + 1] - vars[a_start + t], 2);
+		}
+  
+**MPC Constraints** MPC.cpp(line 91:133) shows the setup for rest of the constraints.  Setup uses CppAD library that helps us do all the gradients calculations in linear algebra.
+
+**MPC Steps**  Following are the steps for setting up MPC constrainsts and cost function.
+
+1. Define N - length of tragectory, dt - duration of each timestep.
+2. Fit polynomial to way points and use it to set initial cross track error and orientation error.
+3. Define vehicle dynamics and actuator limitations along with other constraints.
+4. Define cost function.
+
+After setting up the model constrainsts, following are the steps for executing MPC:
+1. Pass current state as the initial state to MPC
+2. Call optimization solver with the initial state, the solver will return the vector of control inputs that minimizes the cost function.   Solver uses Ipopt library which is a library for large scale nonlinear optimization of continuous systems.
+
 ### Timestep Length and Elapsed Duration (N & dt)
 Timestep length(N) and Frequency(dt) are key parameters that needed to be tuned for the MPC model.
 
@@ -37,7 +72,9 @@ dt is how much time elapses between acutations, for low values of dt the cars wa
 
 ### Polynomial Fitting and MPC Preprocessing
 
-x and y coordinates sent by the simulator is in map coordinates, these were converted to car cordinates and a 3rd degree polinomial was fit to calculate CTE.
+Polyeval and Polyfit functions in main.cpp(line 36:66) is used extensively to address the two objectives: Speed and polynomial track line to follow.  To optimize the speed we have a cost function that measures if the speed of the car is really close to the desired speed and to optimize the track to be followed by the car, we use a polynomial line through 6 waypoints, the car is doing well if the car is close to that line.
+
+Since the x and y coordinates sent by the simulator is in map coordinates, these were converted to car cordinates and a 3rd degree polinomial was fit to calculate CTE.
 
 ### Model Predictive Control with Latency
 Latency defines the delay in propagating commands through the system to the car controls, since the simulator has been setup with a latency of 100ms, the model is implemented with 100ms latency as well.  Removing this latecy, the model was able to achieve a maximum speed of 100mph, with the latecy the maximum speed had to be reduced to 60mph for smooth steering and throttle.
