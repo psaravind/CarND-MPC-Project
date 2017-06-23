@@ -46,6 +46,7 @@ Minimize the use of actuators in the cost function.
 		}
 
 Minimize the value gap between sequential actuations so that car is not jerky and not compromise the car.
+
 		for (int t = 0; t < N - 2; t++) {
 			fg[0] += 200 * CppAD::pow(vars[delta_start + t + 1] - vars[delta_start + t], 2);
 			fg[0] += 10 * CppAD::pow(vars[a_start + t + 1] - vars[a_start + t], 2);
