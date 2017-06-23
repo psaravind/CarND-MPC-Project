@@ -39,6 +39,7 @@ The cost function includes several coefficients that have a lot of power on how 
 		}
 
 Minimize the use of actuators in the cost function.
+
 		for (int t = 0; t < N - 1; t++) {
 			fg[0] += 5 * CppAD::pow(vars[delta_start + t], 2);
 			fg[0] += 5 * CppAD::pow(vars[a_start + t], 2);
