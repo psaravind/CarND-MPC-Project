@@ -52,7 +52,7 @@ Minimize the value gap between sequential actuations so that car is not jerky an
 			fg[0] += 10 * CppAD::pow(vars[a_start + t + 1] - vars[a_start + t], 2);
 		}
   
-**MPC Constraints** MPC.cpp(line 91:133) shows the setup for rest of the constraints.  Setup uses CppAD library that helps us do all the gradients calculations in linear algebra.
+**MPC Constraints** MPC.cpp(line 91:133) shows the setup for rest of the constraints.  Setup uses CppAD library that helps us do all the gradients calculation in linear algebra.
 
 **MPC Steps**  Following are the steps for setting up MPC constrainsts and cost function.
 
