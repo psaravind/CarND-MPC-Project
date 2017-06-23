@@ -57,13 +57,14 @@ Minimize the value gap between sequential actuations so that car is not jerky an
 **MPC Steps**  Following are the steps for setting up MPC constrainsts and cost function.
 
 1. Define N - length of tragectory, dt - duration of each timestep.
-2. Fit polynomial to way points and use it to set initial cross track error and orientation error.
+2. Fit polynomial to way points and use it to set initial cross track and orientation error.
 3. Define vehicle dynamics and actuator limitations along with other constraints.
 4. Define cost function.
 
 After setting up the model constrainsts, following are the steps for executing MPC:
 1. Pass current state as the initial state to MPC
 2. Call optimization solver with the initial state, the solver will return the vector of control inputs that minimizes the cost function.   Solver uses Ipopt library which is a library for large scale nonlinear optimization of continuous systems.
+3. Apply first control input to the car simulator and go back to step 1.
 
 ### Timestep Length and Elapsed Duration (N & dt)
 Timestep length(N) and Frequency(dt) are key parameters that needed to be tuned for the MPC model.
@@ -73,7 +74,6 @@ Timestep N is the number of timesteps in the horizon, as it increases, the model
 dt is how much time elapses between acutations, for low values of dt the cars was oscillating a lot in the middle of the road, this is due to frequent responses from the actuator and the vehicle responding constantly.  For large value of dt, the car had jerky motion on the track, making sharp turns at the track edges, this resulted in car leaving the track few times.
 
 ### Polynomial Fitting and MPC Preprocessing
-
 Polyeval and Polyfit functions in main.cpp(line 36:66) is used extensively to address the two objectives: Speed and polynomial track line to follow.  To optimize the speed we have a cost function that measures if the speed of the car is really close to the desired speed and to optimize the track to be followed by the car, we use a polynomial line through 6 waypoints, the car is doing well if the car is close to that line.
 
 Since the x and y coordinates sent by the simulator is in map coordinates, these were converted to car cordinates and a 3rd degree polinomial was fit to calculate CTE.
