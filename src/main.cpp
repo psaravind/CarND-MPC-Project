@@ -11,6 +11,7 @@
 
 // for convenience
 using json = nlohmann::json;
+const double Lf = 2.67;
 
 // For converting back and forth between radians and degrees.
 constexpr double pi() { return M_PI; }
@@ -122,7 +123,16 @@ int main() {
 					double throttle_value = j[1]["throttle"];
 
 					Eigen::VectorXd state(6);
-					state << 0, 0, 0, v, cte, epsi;
+					// Account for latency of 100 ms
+					const double latency = 0.1; // 100 ms
+					
+					//state << 0, 0, 0, v, cte, epsi;
+					state << v * latency, 
+							0, 
+							-v * steer_value / Lf * latency,
+							v,
+							cte,
+							epsi;
 
 					auto vars = mpc.Solve(state, coeffs);
 

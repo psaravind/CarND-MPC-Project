@@ -174,10 +174,10 @@ vector<double> MPC::Solve(Eigen::VectorXd state, Eigen::VectorXd coeffs) {
 		vars_upperbound[i] = 1.0e19;
 	}
 
-	// set the range of values delta to [-25, 25] in radians times Lf
+	// set the range of values delta to [-25, 25] in radians
 	for (int i = delta_start; i < a_start; i++) {
-		vars_lowerbound[i] = -0.436332 * Lf;
-		vars_upperbound[i] = 0.436332 * Lf;
+		vars_lowerbound[i] = -0.436332;
+		vars_upperbound[i] = 0.436332;
 	}
 	
 	// Acceleration/decceleration upper and lower limits.
@@ -243,3 +243,4 @@ vector<double> MPC::Solve(Eigen::VectorXd state, Eigen::VectorXd coeffs) {
 	}
 	return result;
 }
+
